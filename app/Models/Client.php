@@ -13,7 +13,7 @@ class Client extends Model
         'name',
         'email',
         'password',
-        'mobile',
+        'phone',
         'address',
         'status',
         'image',
@@ -23,6 +23,11 @@ class Client extends Model
     public function rating()
     {
         return $this->hasMany(Rating::class);
+    }
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
     }
 
     public function getImageAttribute($value)

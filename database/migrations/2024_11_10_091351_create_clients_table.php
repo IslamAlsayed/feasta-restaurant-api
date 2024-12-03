@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->string('mobile');
+            $table->string('phone');
             $table->string('address');
             $table->enum('status', ['active', 'inactive', 'premium', 'special', 'new'])->default('new');
             $table->string('image')->default('user.jpg');

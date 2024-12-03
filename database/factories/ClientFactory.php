@@ -21,7 +21,7 @@ class ClientFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->email(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'mobile' => fake()->e164PhoneNumber(),
+            'phone' => fake()->e164PhoneNumber(),
             'address' => fake()->address(),
             'image' => 'img' . rand(1, 9) . '.jpg',
         ];

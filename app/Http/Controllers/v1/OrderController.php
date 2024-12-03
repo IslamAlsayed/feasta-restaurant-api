@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Http\Requests\v1\OrderRequest;
@@ -28,6 +29,8 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
+        // return $request->all();
+
         $order = Order::create($request->validated());
 
         if ($order) {
@@ -57,7 +60,11 @@ class OrderController extends Controller
     public function update(OrderRequest $request, $id)
     {
         try {
-            $order = Order::with('client')->findOrFail($id);
+            $order = Order::with('client')->find($id);
+
+            if (!$order) {
+                return response()->json(['status' => 404, 'result' => 'No order found'], 404);
+            }
 
             $order->update($request->validated());
 
@@ -69,14 +76,20 @@ class OrderController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+        $order = Order::with('client')->find($id);
+
+        if (!$order) {
+            return response()->json(['status' => 404, 'result' => 'No order found'], 404);
+        }
+
         // Validation
         $request->validate(['status' => 'required|in:pending,completed,cancelled']);
-
-        $order = Order::with('client')->findOrFail($id);
 
         // Update the order status
         $order->status = $request->status;
         $order->save();
+
+        broadcast(new SendMessage($order->id));
 
         return response()->json(
             [
@@ -93,7 +106,12 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::find($id);
+
+        if (!$order) {
+            return response()->json(['status' => 404, 'result' => 'No order found'], 404);
+        }
+
         $deleteState = $order->delete();
 
         if ($deleteState) {

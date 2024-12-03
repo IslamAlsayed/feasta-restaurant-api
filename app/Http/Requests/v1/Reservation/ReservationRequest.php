@@ -24,7 +24,7 @@ class ReservationRequest extends FormRequest
         return [
             'name' => 'string',
             'email' => 'required|email',
-            'number_of_people' => 'required|integer|min:1|max:10',
+            'capacity' => 'required|integer|min:1|max:10',
             'date' => 'required|date',
             'time' => 'required|between:1,4',
             'phone' => 'required|regex:/^[0-9]{10,15}$/',

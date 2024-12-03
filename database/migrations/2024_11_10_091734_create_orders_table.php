@@ -16,9 +16,12 @@ return new class extends Migration
             $table->json('items');
             $table->decimal('total', 62, 2);
             $table->integer('discount')->default(10);
+            $table->json('client');
+            $table->json('address')->nullable();
+            $table->string('wayEat');
+            $table->string('wayPay');
             $table->enum('status', ['pending', 'completed', 'cancelled'])->default('pending');
             $table->foreignId('client_id')->constrained('clients')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('table_id')->constrained('tables')->cascadeOnDelete()->cascadeOnUpdate();
             $table->softDeletes();
             $table->timestamps();
         });

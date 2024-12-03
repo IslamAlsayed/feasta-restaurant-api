@@ -4,7 +4,7 @@ namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderRequest extends FormRequest
+class TableRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,8 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'items' => 'required|json',
-            'total' => 'required|numeric|min:0.1',
-            'discount' => 'numeric',
-            'client' => 'required|json',
-            'address' => 'required|json',
-            'wayEat' => 'required|string',
-            'wayPay' => 'required|string',
-            'status' => 'nullable|in:pending,completed,cancelled',
-            'client_id' => 'required|exists:clients,id',
+            'capacity' => 'nullable|between:1,10',
+            'status' => 'nullable|in:available,reserved',
         ];
     }
 }

@@ -24,7 +24,7 @@ class UpdateReservationRequest extends FormRequest
         return [
             'name' => 'string',
             'email' => 'email',
-            'number_of_people' => 'integer|min:1|max:10',
+            'capacity' => 'integer|min:1|max:10',
             'date' => 'date',
             'time' => 'between:1,4',
             'phone' => 'regex:/^[0-9]{10,15}$/',

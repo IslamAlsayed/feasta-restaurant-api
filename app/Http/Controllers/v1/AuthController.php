@@ -77,23 +77,28 @@ class AuthController extends Controller
         return response()->json(['message' => 'An error occurred, please try again later.'], 401);
     }
 
-    // public function pusherAuth()
-    // {
-    //     $user = JWTAuth::parseToken()->authenticate();
+    public function pusher(Request $request)
+    {
+        $socketId = $request->socket_id;
+        $channelName = $request->channel_name;
 
-    //     if ($user) {
-    //         $pusher = new Pusher(ENV('PUSHER_APP_KEY'), ENV('PUSHER_APP_SECRET'), ENV('PUSHER_APP_ID'));
-    //         $auth = $pusher->socket_auth(Input::get('channel_name'), Input::get('socket_id'));
-    //         $callback = str_replace('\\', '', $_GET['callback']);
-    //         header('Content-Type: application/javascript');
-    //         echo ($callback . '(' . $auth . ');');
-    //         return;
-    //     } else {
-    //         header('', true, 403);
-    //         echo "Forbidden";
-    //         return;
-    //     }
-    // }
+        $pusher = new Pusher(
+            config('broadcasting.connections.pusher.key'),
+            config('broadcasting.connections.pusher.secret'),
+            config('broadcasting.connections.pusher.app_id'),
+            [
+                'cluster' => config('broadcasting.connections.pusher.options.cluster'),
+                'encrypted' => true,
+            ]
+        );
+
+        $user = JWTAuth::parseToken()->authenticate();
+
+        $presence_data = ['name' => $user->name];
+        $auth = $pusher->presence_auth($channelName, $socketId, auth()->id(), $presence_data);
+
+        return response($auth);
+    }
 
     public function user()
     {

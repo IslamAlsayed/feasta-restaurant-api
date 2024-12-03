@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\SendMessage;
 use Illuminate\Support\Facades\Route;
 
 /*

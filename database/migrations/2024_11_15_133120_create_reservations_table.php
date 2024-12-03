@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable()->default('user');
             $table->string('email')->uniqid();
-            $table->integer('number_of_people');
+            $table->integer('capacity');
             $table->date('date');
             $table->enum('time', ['1', '2', '3', '4']);
             $table->string('phone', 15);

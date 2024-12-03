@@ -38,7 +38,7 @@ class ReservationTest extends TestCase
         $reservationData = [
             'name' => fake()->name(),
             'email' => fake()->email(),
-            'number_of_people' => rand(1, 10),
+            'capacity' => rand(1, 10),
             'date' => fake()->dateTimeThisYear()->format('Y-m-d H:i:s'),
             'time' => fake()->randomElement(['1', '2', '3']),
             'phone' => fake()->e164PhoneNumber(),
@@ -63,7 +63,7 @@ class ReservationTest extends TestCase
         $newData = [
             'name' => fake()->name(),
             'email' => fake()->email(),
-            'number_of_people' => rand(1, 10),
+            'capacity' => rand(1, 10),
             'date' => fake()->dateTimeThisYear()->format('Y-m-d H:i:s'),
             'time' => fake()->randomElement(['1', '2', '3']),
             'phone' => fake()->e164PhoneNumber(),

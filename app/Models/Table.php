@@ -13,4 +13,10 @@ class Table extends Model
         'capacity',
         'status'
     ];
+
+    protected $hidden = [
+        'deleted_at',
+        'created_at',
+        'updated_at',
+    ];
 }

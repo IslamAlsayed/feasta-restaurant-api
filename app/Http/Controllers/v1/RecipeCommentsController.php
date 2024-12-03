@@ -14,7 +14,7 @@ class RecipeCommentsController extends Controller
      */
     public function index($id)
     {
-        $menuComments = MenuComments::with('menu', 'client')->where('item_id', $id)->get();
+        $menuComments = MenuComments::with('menu', 'client')->where('menu_id', $id)->get();
 
         if ($menuComments->isEmpty()) {
             return response()->json(['status' => 404, 'result' => 'No item comments found'], 404);
@@ -42,7 +42,7 @@ class RecipeCommentsController extends Controller
             'name' => $user->name ?? 'user',
             'comment' => $request->input('comment'),
             'rate' => $request->input('rate'),
-            'item_id' => $request->input('item_id'),
+            'menu_id' => $request->input('menu_id'),
             'client_id' => $user->id,
         ];
 
@@ -74,12 +74,12 @@ class RecipeCommentsController extends Controller
             return response()->json(['status' => 500, 'result' => 'the rate is require'], 500);
         }
 
-        if (!$request->input('item_id')) {
-            return response()->json(['status' => 500, 'result' => 'the item_id is require'], 500);
+        if (!$request->input('menu_id')) {
+            return response()->json(['status' => 500, 'result' => 'the menu id is require'], 500);
         }
 
         if (!$request->input('client_id')) {
-            return response()->json(['status' => 500, 'result' => 'the client_id is require'], 500);
+            return response()->json(['status' => 500, 'result' => 'the client id is require'], 500);
         }
 
         $updateComment = [

@@ -13,18 +13,16 @@ class Order extends Model
         'items',
         'total',
         'discount',
+        'client',
+        'address',
+        'wayEat',
+        'wayPay',
         'status',
         'client_id',
-        'table_id',
     ];
 
     public function client()
     {
         return $this->belongsTo(Client::class);
-    }
-
-    public function table()
-    {
-        return $this->belongsTo(Table::class);
     }
 }

@@ -17,7 +17,7 @@ class TableFactory extends Factory
     public function definition(): array
     {
         return [
-            'capacity' => fake()->randomElement(['2', '4', '6', '8', '10']),
+            'capacity' => fake()->randomElement([2, 4, 6, 8, 10]),
             'status' => 'available',
         ];
     }

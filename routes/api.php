@@ -3,6 +3,7 @@
 use App\Http\Controllers\v1\OfferController;
 use App\Http\Controllers\v1\SubscribeController;
 use App\Http\Controllers\v1\AuthController;
+use App\Http\Controllers\v1\CartController;
 use App\Http\Controllers\v1\ChefController;
 use App\Http\Controllers\v1\RatingController;
 use App\Http\Controllers\v1\RecipeCommentsController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\v1\StockController;
 use App\Http\Controllers\v1\MenuController;
 use App\Http\Controllers\v1\OrderController;
 use App\Http\Controllers\v1\ReservationController;
+use App\Http\Controllers\v1\TableController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +30,11 @@ Route::get('/auth/user', [AuthController::class, 'user'])->name('user');
 Route::post('auth/login', [AuthController::class, 'login'])->name('auth');
 Route::post('auth/register', [AuthController::class, 'register'])->name('auth');
 Route::post('send-mail', [AuthController::class, 'sendMail'])->name('sendMail');
+Route::post('/pusher/auth', [AuthController::class, 'pusher'])->name('pusher.auth');
+
+
+
+
 
 //? done
 // Reservations Routes
@@ -83,6 +90,7 @@ Route::get('/subscribes/counter', [SubscribeController::class, 'counter'])->name
 Route::get('/subscribes/{id}', [SubscribeController::class, 'show'])->name('subscribes.show');
 Route::delete('/subscribes/{id}', [SubscribeController::class, 'destroy'])->name('subscribes.destroy');
 
+//? done
 // Ratings Routes
 Route::get('/ratings', [RatingController::class, 'index'])->name('ratings.index');
 Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
@@ -90,14 +98,29 @@ Route::get('/ratings/{id}', [RatingController::class, 'show'])->name('ratings.sh
 Route::put('/ratings/{id}', [RatingController::class, 'update'])->name('ratings.update');
 Route::delete('/ratings/{id}', [RatingController::class, 'destroy'])->name('ratings.destroy');
 
-// Orders Routes
+//? done
+// Tables Routes
+Route::get('/tables', [TableController::class, 'index'])->name('tables.index');
+Route::post('/tables', [TableController::class, 'store'])->name('tables.store');
+Route::get('/tables/{id}', [TableController::class, 'show'])->name('tables.show');
+Route::put('/tables/{id}', [TableController::class, 'update'])->name('tables.update');
+// Route::delete('/tables/{id}', [TableController::class, 'destroy'])->name('tables.destroy');
 
+//? done
+// Orders Routes
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::post('/orders/{id}/updateStatus', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
+// Cart Routes
+// Route::get('/cart/{client_id}/{code}', [OrderController::class, 'index'])->name('cart.index');
+Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+Route::get('/cart/{client_id}/{code}', [CartController::class, 'show'])->name('cart.show');
+Route::put('/cart/{client_id}/{code}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 
 // // Reviews Routes

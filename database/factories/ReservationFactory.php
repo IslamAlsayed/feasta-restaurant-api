@@ -20,11 +20,12 @@ class ReservationFactory extends Factory
         $client = Client::inRandomOrder()->first() ?? Client::factory()->create();
 
         return [
-            'email' => fake()->email(),
-            'number_of_people' => fake()->numberBetween(1, 10),
+            'name' => $client->name,
+            'email' => $client->email,
+            'capacity' => fake()->numberBetween(1, 10),
             'date' => fake()->date(),
             'time' => fake()->randomElement(['1', '2', '3', '4']),
-            'phone' => fake()->e164PhoneNumber(),
+            'phone' => $client->phone,
             'status' => 'pending',
             'client_id' => $client->id,
         ];
