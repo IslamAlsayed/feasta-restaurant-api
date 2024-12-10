@@ -13,13 +13,18 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menu = Menu::with('chef')->get();
+        $menus = Menu::with('chef')->get();
 
-        if ($menu->isEmpty()) {
+        foreach ($menus as $menu) {
+            $menu['price'] = round($menu['price'] + ($menu['price'] * $menu['vat'] / 100), 2);
+            $menu['vat'] = $menu['vat'] / 100;
+        }
+
+        if ($menus->isEmpty()) {
             return response()->json(['status' => 404, 'result' => 'No item found'], 404);
         }
 
-        return response()->json(['status' => 200, 'result' => $menu], 200);
+        return response()->json(['status' => 200, 'result' => $menus], 200);
     }
 
     /**

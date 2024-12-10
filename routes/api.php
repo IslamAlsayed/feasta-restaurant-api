@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\v1\ArticleController;
 use App\Http\Controllers\v1\OfferController;
 use App\Http\Controllers\v1\SubscribeController;
 use App\Http\Controllers\v1\AuthController;
@@ -118,9 +119,17 @@ Route::post('/orders/{id}/updateStatus', [OrderController::class, 'updateStatus'
 // Cart Routes
 // Route::get('/cart/{client_id}/{code}', [OrderController::class, 'index'])->name('cart.index');
 Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
-Route::get('/cart/{client_id}/{code}', [CartController::class, 'show'])->name('cart.show');
-Route::put('/cart/{client_id}/{code}', [CartController::class, 'update'])->name('cart.update');
-Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::get('/cart/{orderid}/{code}', [CartController::class, 'show'])->name('cart.show');
+Route::put('/cart/{orderid}/{code}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{orderid}/{code}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+//? done
+// Articles Routes
+Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
+Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+Route::put('/articles/{id}', [ArticleController::class, 'update'])->name('articles.update');
+Route::delete('/articles/{id}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 
 
 // // Reviews Routes

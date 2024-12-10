@@ -9,7 +9,6 @@ use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use Pusher\Pusher;
-use Symfony\Component\Console\Input\Input;
 use Validator;
 
 class AuthController extends Controller
@@ -20,7 +19,7 @@ class AuthController extends Controller
 
         if (!$user) return response()->json(['message' => 'Incorrect email or password'], 404);
 
-        if ($user['status'] === 'inactive') {
+        if ($user['status'] === '0') {
             return response()->json(['message' => 'This account is blocked'], 403);
         }
 

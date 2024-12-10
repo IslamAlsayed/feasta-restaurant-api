@@ -20,7 +20,7 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         if (empty(self::$numbers)) {
-            self::$numbers = range(1, 14);
+            self::$numbers = range(1, 11);
             shuffle(self::$numbers);
         }
 
@@ -28,9 +28,6 @@ class ArticleFactory extends Factory
 
         return [
             'title' => 'best chocolate cake',
-            'type' => json_encode(fake()->randomElement([['dishes'], ['dishes', 'seasonal', 'sweet'], ['dishes', 'seasonal'], ['dishes', 'sweet']])),
-            'comments' => rand(0, 120),
-            'likes' => rand(0, 120),
             'description' => fake()->sentence(rand(14, 50)),
             'image' => $uniqueNumber . '.jpg',
         ];

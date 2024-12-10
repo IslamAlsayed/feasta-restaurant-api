@@ -28,13 +28,18 @@ class CartFactory extends Factory
             ['id' => $menu3->id, 'title' => $menu3->title, 'image' => '22.webp', 'price' => $menu3->price, 'quantity' => 1, 'vat' => $menu3->vat]
         ];
 
+        $total = 0;
+
+        foreach ($items as $item) {
+            $total += $item['price'] * $item['quantity'] + ($item['price'] * $item['quantity'] * $item['vat'] / 100);
+        }
+
         $client = Client::inRandomOrder()->first() ?? Client::factory()->create();
 
         return [
             'items' => json_encode($items),
-            'total' => 277.90,
-            'order_code' => strtoupper(substr(md5(uniqid()), 0, 10)),
-            'wayPay' => fake()->randomElement(['cash', 'wallet', 'bank']),
+            'total' => $total,
+            'code' => strtoupper(substr(md5(uniqid()), 0, 10)),
             'client_id' => $client->id,
         ];
     }

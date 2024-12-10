@@ -34,7 +34,7 @@ class MenuRequest extends FormRequest
             'offer_price' => 'required|date',
             'offer_end_at' => 'required|date|after:start_date',
             'discount' => 'nullable|integer|min:1',
-            'description' => 'nullable|string|max:500',
+            'description' => 'nullable|string|min:20',
             'image' => 'nullable|string|max:255',
             'chef_id' => 'required|exists:chefs,id',
         ];

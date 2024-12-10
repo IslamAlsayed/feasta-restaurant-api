@@ -5,7 +5,6 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\CartRequest;
 use App\Models\Cart;
-use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -14,11 +13,6 @@ class CartController extends Controller
      */
     public function store(CartRequest $request)
     {
-        // $item = $request->input('items');
-        // return $item['price'] . ' | ' . floor($item['price'] + ($item['price'] * ($item['vat'] / 100)));
-        // return $item['price'] . ' | ' . ceil($item['price'] + ($item['price'] * ($item['vat'] / 100)));
-        // return $request->all();
-
         $cart = Cart::create($request->validated());
 
         if ($cart) {
@@ -37,9 +31,9 @@ class CartController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($client_id, $code)
+    public function show($orderid, $code)
     {
-        $cart = Cart::with('client')->where('client_id', $client_id)->where('code', $code)->first();
+        $cart = Cart::with('client')->where('id', $orderid)->where('code', $code)->first();
 
         if (!$cart) {
             return response()->json(['status' => 404, 'result' => 'No cart found'], 404);
@@ -51,12 +45,10 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CartRequest $request, $id)
+    public function update(CartRequest $request, $orderId, $code)
     {
-        return $request->all();
-
         try {
-            $cart = Cart::with('client')->find($id);
+            $cart = Cart::with('client')->where('id', $orderId)->where('code', $code)->first();
 
             if (!$cart) {
                 return response()->json(['status' => 404, 'result' => 'No cart found'], 404);
@@ -73,9 +65,9 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($orderId, $code)
     {
-        $cart = Cart::find($id);
+        $cart = Cart::where('id', $orderId)->where('code', $code)->first();
 
         if (!$cart) {
             return response()->json(['status' => 404, 'result' => 'No cart found'], 404);

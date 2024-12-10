@@ -2,19 +2,31 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'items',
         'total',
-        'order_code',
+        'code',
         'client_id',
     ];
+
+    protected $hidden = [
+        "created_at",
+        "deleted_at",
+    ];
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
 
     public function client()
     {
@@ -26,19 +38,8 @@ class Cart extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            if (empty($model->order_code)) {
-                $model->order_code = strtoupper(substr(md5(uniqid()), 0, 10));
-            }
-
-            if (empty($model->total)) {
-                $items = json_decode($model->items, true);
-                $total = 0;
-
-                foreach ($items as $item) {
-                    $total += $item['price'] * $item['quantity'] + ($item['price'] * $item['quantity'] * ($item['vat'] / 100));
-                }
-
-                $model->total = number_format($total);
+            if (empty($model->code)) {
+                $model->code = strtoupper(substr(md5(uniqid()), 0, 10));
             }
         });
     }

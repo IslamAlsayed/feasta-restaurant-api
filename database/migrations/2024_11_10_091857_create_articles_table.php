@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->json('type')->nullable();
-            $table->integer('comments')->default(0);
-            $table->integer('likes')->default(0);
             $table->longText('description');
             $table->string('image')->nullable();
             $table->string('writer')->default('admin');

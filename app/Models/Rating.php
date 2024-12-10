@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Rating extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'message',
@@ -15,6 +17,16 @@ class Rating extends Model
         'client_id',
         'menu_id',
     ];
+
+    protected $hidden = [
+        "created_at",
+        "deleted_at",
+    ];
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i');
+    }
 
     public function client()
     {

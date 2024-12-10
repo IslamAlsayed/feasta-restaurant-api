@@ -54,7 +54,7 @@ class ChefController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StockRequest $request, $id)
+    public function update(ChefRequest $request, $id)
     {
         try {
             $chef = Chef::find($id);

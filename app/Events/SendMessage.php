@@ -40,7 +40,7 @@ class SendMessage implements ShouldBroadcastNow
 
     public function broadcastWith(): array
     {
-        return ['status' => 200, 'result' => 'Your order has been completed.', 'orderId' => $this->orderId];
+        return ['status' => 200, 'result' => 'Your order has been completed.'];
     }
 
     public function broadcastAs()

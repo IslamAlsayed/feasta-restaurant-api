@@ -22,8 +22,9 @@ class ArticleCommentsFactory extends Factory
         $article = Article::inRandomOrder()->first() ?? Article::factory()->create();
 
         return [
+            'like' => fake()->randomElement([true, false]),
             'comment' => fake()->sentence(rand(7, 50)),
-            'feeling' => fake()->randomElement(['like', 'heart', 'love', 'laugh', 'sad', 'angry']),
+            'feeling' => fake()->randomElement(['', 'like', 'heart', 'love', 'laugh', 'sad', 'angry']),
             'client_id' => $client->id,
             'article_id' => $article->id,
         ];

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -27,11 +29,26 @@ class Menu extends Model
         'chef_id',
     ];
 
+    protected $hidden = [
+        "created_at",
+        "deleted_at",
+    ];
+
+    public function getPriceWithVatAttribute()
+    {
+        return $this->price + ($this->price * $this->vat / 100);
+    }
+
     public function getImageAttribute($value)
     {
         return $value
-            ? 'http://127.0.0.1:8000/storage/images/recipes/' . $value
-            : 'http://127.0.0.1:8000/storage/images/recipes/default.png';
+            ? env('APP_URL') . '/storage/images/recipes/' . $value
+            : env('APP_URL') . '/storage/images/recipes/default.png';
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 
     public function chef()

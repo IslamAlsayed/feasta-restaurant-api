@@ -29,8 +29,6 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        // return $request->all();
-
         $order = Order::create($request->validated());
 
         if ($order) {
@@ -76,7 +74,7 @@ class OrderController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        $order = Order::with('client')->find($id);
+        $order = Order::find($id);
 
         if (!$order) {
             return response()->json(['status' => 404, 'result' => 'No order found'], 404);
@@ -85,11 +83,12 @@ class OrderController extends Controller
         // Validation
         $request->validate(['status' => 'required|in:pending,completed,cancelled']);
 
+        broadcast(new SendMessage($order->id));
+
         // Update the order status
         $order->status = $request->status;
+        $order->delete();
         $order->save();
-
-        broadcast(new SendMessage($order->id));
 
         return response()->json(
             [

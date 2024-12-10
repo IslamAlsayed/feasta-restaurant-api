@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('article_comments', function (Blueprint $table) {
             $table->id();
+            $table->boolean('like');
             $table->longText('comment');
-            $table->enum('feeling', ['like', 'heart', 'love', 'laugh', 'sad', 'angry']);
+            $table->string('feeling');
             $table->foreignId('client_id')->constrained('clients')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('article_id')->constrained('articles')->cascadeOnDelete()->cascadeOnUpdate();
             $table->softDeletes();

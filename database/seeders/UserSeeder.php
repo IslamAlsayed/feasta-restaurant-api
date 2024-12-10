@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
@@ -25,7 +24,7 @@ class UserSeeder extends Seeder
             'type' => 'admin',
             'email' => 'admin@example.com',
             'password' => Hash::make('test123'),
-            'status' => 'active'
+            'status' => '1'
         ]);
 
         User::create([
@@ -34,7 +33,7 @@ class UserSeeder extends Seeder
             'type' => 'guest',
             'email' => 'guest@example.com',
             'password' => Hash::make('test123'),
-            'status' => 'active'
+            'status' => '1'
         ]);
 
         User::create([
@@ -43,7 +42,7 @@ class UserSeeder extends Seeder
             'type' => 'admin',
             'email' => 'eslamalsayed8133@gmail.com',
             'password' => Hash::make('test123'),
-            'status' => 'inactive'
+            'status' => '0'
         ]);
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Chef extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -32,15 +34,25 @@ class Chef extends Model
     public function getFavoriteDishImageAttribute($value)
     {
         return $value ?
-            'http://127.0.0.1:8000/storage/images/recipes/' . $value :
-            'http://127.0.0.1:8000/storage/images/recipes/default.jpg';
+            env('APP_URL') . '/storage/images/recipes/' . $value :
+            env('APP_URL') . '/storage/images/recipes/default.jpg';
     }
 
     public function getImageAttribute($value)
     {
         return $value ?
-            'http://127.0.0.1:8000/storage/images/chefs/chef' . $value :
-            'http://127.0.0.1:8000/storage/images/chefs/user.jpg';
+            env('APP_URL') . '/storage/images/chefs/chef' . $value :
+            env('APP_URL') . '/storage/images/chefs/user.jpg';
+    }
+
+    protected $hidden = [
+        "created_at",
+        "deleted_at",
+    ];
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 
     public function menu()
