@@ -11,7 +11,7 @@
          */
         public function up(): void
         {
-            Schema::create('menus', function (Blueprint $table) {
+            Schema::create('recipes', function (Blueprint $table) {
                 $table->id();
                 $table->string('title');
                 $table->decimal('price', 62, 2);
@@ -37,6 +37,6 @@
          */
         public function down(): void
         {
-            Schema::dropIfExists('menus');
+            Schema::dropIfExists('recipes');
         }
     };

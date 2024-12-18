@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Client;
-use App\Models\Menu;
+use App\Models\Recipe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,13 +19,13 @@ class RatingFactory extends Factory
     public function definition(): array
     {
         $client = Client::inRandomOrder()->first() ?? Client::factory()->create();
-        $menu = Menu::inRandomOrder()->first() ?? Menu::factory()->create();
+        $recipe = Recipe::inRandomOrder()->first() ?? Recipe::factory()->create();
 
         return [
             'message' => fake()->sentence(rand(7, 50)),
             'rate' => rand(2, 5),
             'client_id' => $client->id,
-            'menu_id' => $menu,
+            'recipe_id' => $recipe->id,
         ];
     }
 }

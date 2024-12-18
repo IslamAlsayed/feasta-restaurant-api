@@ -52,11 +52,11 @@ class Chef extends Model
 
     public function getUpdatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
+        return Carbon::parse($value)->format('Y-m-d H:i A');
     }
 
-    public function menu()
+    public function recipe()
     {
-        return $this->hasMany(Menu::class);
+        return $this->hasMany(Recipe::class);
     }
 }

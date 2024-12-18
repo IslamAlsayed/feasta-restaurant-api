@@ -9,6 +9,20 @@ use App\Models\Cart;
 class CartController extends Controller
 {
     /**
+     * Display a listing of the resource.
+     */
+    public function index($client_id)
+    {
+        $cart = Cart::with('client')->where('client_id', $client_id)->first();
+
+        if (!$cart) {
+            return response()->json(['status' => 404, 'result' => 'No cart found'], 404);
+        }
+
+        return response()->json(['status' => 200, 'result' => $cart], 200);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(CartRequest $request)

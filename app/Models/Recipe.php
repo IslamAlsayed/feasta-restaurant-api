@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class Recipe extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -48,7 +48,7 @@ class Menu extends Model
 
     public function getUpdatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
+        return Carbon::parse($value)->format('Y-m-d H:i A');
     }
 
     public function chef()
@@ -56,9 +56,9 @@ class Menu extends Model
         return $this->belongsTo(Chef::class);
     }
 
-    public function menuComment()
+    public function recipeComment()
     {
-        return $this->hasMany(MenuComments::class);
+        return $this->hasMany(RecipeComments::class);
     }
 
     public function offer()

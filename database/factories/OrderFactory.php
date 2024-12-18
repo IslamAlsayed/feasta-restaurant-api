@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cart>
  */
-class CartFactory extends Factory
+class OrderFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -34,12 +34,17 @@ class CartFactory extends Factory
             $total += $item['price'] * $item['quantity'] + ($item['price'] * $item['quantity'] * $item['vat'] / 100);
         }
 
-        $client = Client::inRandomOrder()->first() ?? Client::factory()->create();
+        $client = Client::find(1);
 
         return [
             'items' => json_encode($items),
             'total' => $total,
-            'code' => strtoupper(substr(md5(uniqid()), 0, 10)),
+            'discount' => fake()->randomElement([0, 5, 10, 15, 20]),
+            'client' => '{}',
+            'address' => '{}',
+            'wayEat' => 'pick-up',
+            'wayPay' => 'cash',
+            'status' => fake()->randomElement(['pending', 'completed', 'cancelled']),
             'client_id' => $client->id,
         ];
     }

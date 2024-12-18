@@ -4,7 +4,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
-use App\Models\Menu;
+use App\Models\Recipe;
 use App\Models\Order;
 use App\Models\Rating;
 use App\Models\Subscribe;
@@ -17,7 +17,7 @@ class SubscribeController extends Controller
      */
     public function index()
     {
-        $subscribe = Subscribe::all();
+        $subscribe = Subscribe::withTrashed()->get();
 
         if ($subscribe->isEmpty()) {
             return response()->json(['status' => 404, 'result' => 'No subscribe found'], 404);
@@ -31,7 +31,12 @@ class SubscribeController extends Controller
      */
     public function store(Request $request)
     {
-        $subscribe = Subscribe::where('email', $request->input('email'))->first();
+        $subscribe = Subscribe::withTrashed()->where('email', $request->input('email'))->first();
+
+        if ($subscribe && $subscribe->deleted_at != null) {
+            $subscribe->restore();
+            return response()->json(['status' => 200, 'result' => 'success create subscribe'], 200);
+        }
 
         if ($subscribe) {
             return response()->json(['status' => 500, 'result' => 'the email is subscribe already!'], 500);
@@ -41,21 +46,23 @@ class SubscribeController extends Controller
             return response()->json(['status' => 500, 'result' => 'the email is required'], 500);
         }
 
-        $subscribe = Subscribe::create($request->all());
+        if (!$subscribe) {
+            $subscribe = Subscribe::create($request->all());
 
-        if ($subscribe) {
-            return response()->json(['status' => 200, 'result' => 'success create subscribe', 'data' => $subscribe], 200);
-        } else {
-            return response()->json(['status' => 500, 'result' => 'wrong create subscribe'], 500);
+            if ($subscribe) {
+                return response()->json(['status' => 200, 'result' => 'subscribe success', 'data' => $subscribe], 200);
+            }
         }
+
+        return response()->json(['status' => 500, 'result' => 'subscribe wrong'], 500);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($email)
     {
-        $subscribe = Subscribe::find($id);
+        $subscribe = Subscribe::withTrashed()->where('email', $email)->first();
 
         if (!$subscribe) {
             return response()->json(['status' => 404, 'result' => 'No subscribe found'], 404);
@@ -67,9 +74,9 @@ class SubscribeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($email)
     {
-        $subscribe = Subscribe::find($id);
+        $subscribe = Subscribe::withTrashed()->where('email', $email)->first();
 
         if (!$subscribe) {
             return response()->json(['status' => 404, 'result' => 'No subscribe found'], 404);
@@ -78,10 +85,10 @@ class SubscribeController extends Controller
         $deleteState = $subscribe->delete();
 
         if ($deleteState) {
-            return response()->json(['status' => 200, 'result' => 'delete subscribe success'], 200);
+            return response()->json(['status' => 200, 'result' => 'unsubscribe success'], 200);
         }
 
-        return response()->json(['status' => 500, 'result' => 'delete subscribe failed'], 500);
+        return response()->json(['status' => 500, 'result' => 'subscribe failed'], 500);
     }
 
     public function counter()
@@ -89,7 +96,7 @@ class SubscribeController extends Controller
         $clients = Client::count();
         $ratings = Rating::count();
         $orders = Order::count();
-        $recipes = Menu::count();
+        $recipes = Recipe::count();
 
         $result = [
             'clients' => $clients,

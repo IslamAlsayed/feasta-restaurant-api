@@ -16,7 +16,7 @@ class Offer extends Model
         'description',
         'start_date',
         'end_date',
-        'menu_id'
+        'recipe_id'
     ];
 
     protected $hidden = [
@@ -26,11 +26,11 @@ class Offer extends Model
 
     public function getUpdatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i');
+        return Carbon::parse($value)->format('Y-m-d H:i A');
     }
 
-    public function menu()
+    public function recipe()
     {
-        return $this->belongsTo(Menu::class);
+        return $this->belongsTo(Recipe::class);
     }
 }

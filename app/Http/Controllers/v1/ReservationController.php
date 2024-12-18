@@ -15,7 +15,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::all();
+        $reservations = Reservation::with('client')->get();
 
         if ($reservations->isEmpty()) {
             return response()->json(['status' => 404, 'result' => 'No reservations found'], 404);
@@ -43,15 +43,15 @@ class ReservationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($client_id)
     {
-        $reservation = Reservation::find($id);
+        $reservations = Reservation::with('client')->where('client_id', $client_id)->orderBy('updated_at')->get();
 
-        if (!$reservation) {
-            return response()->json(['status' => 404, 'result' => 'No reservation found'], 404);
+        if ($reservations->isEmpty()) {
+            return response()->json(['status' => 404, 'result' => 'No reservations found'], 404);
         }
 
-        return response()->json(['status' => 200, 'result' => $reservation], 200);
+        return response()->json(['status' => 200, 'result' => $reservations], 200);
     }
 
     /**

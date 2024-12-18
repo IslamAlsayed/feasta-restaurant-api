@@ -15,7 +15,7 @@ class Rating extends Model
         'message',
         'rate',
         'client_id',
-        'menu_id',
+        'recipe_id',
     ];
 
     protected $hidden = [
@@ -25,7 +25,7 @@ class Rating extends Model
 
     public function getUpdatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i');
+        return Carbon::parse($value)->format('Y-m-d H:i A');
     }
 
     public function client()
@@ -33,8 +33,8 @@ class Rating extends Model
         return $this->belongsTo(Client::class);
     }
 
-    public function menu()
+    public function recipe()
     {
-        return $this->belongsTo(Menu::class);
+        return $this->belongsTo(Recipe::class);
     }
 }

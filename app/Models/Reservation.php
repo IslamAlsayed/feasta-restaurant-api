@@ -29,7 +29,7 @@ class Reservation extends Model
 
     public function getUpdatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i');
+        return Carbon::parse($value)->format('Y-m-d H:i A');
     }
 
     public function getTimeAttribute($value)
@@ -38,9 +38,13 @@ class Reservation extends Model
             '1' => 'breakfast',
             '2' => 'lunch',
             '3' => 'dinner',
-            '4' => 'dessert',
         ];
 
         return $times[$value] ?? $value;
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }

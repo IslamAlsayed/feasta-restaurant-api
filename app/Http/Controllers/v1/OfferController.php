@@ -27,7 +27,7 @@ class OfferController extends Controller
      */
     public function show($id)
     {
-        $offer = Offer::with('menu')->find($id);
+        $offer = Offer::with('recipe')->find($id);
 
         if (!$offer) {
             return response()->json(['status' => 404, 'result' => 'No offer found'], 404);

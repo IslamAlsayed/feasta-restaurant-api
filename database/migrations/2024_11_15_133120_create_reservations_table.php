@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->uniqid();
             $table->integer('capacity');
             $table->date('date');
-            $table->enum('time', ['1', '2', '3', '4']);
+            $table->enum('time', ['1', '2', '3']);
             $table->string('phone', 15);
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             $table->foreignId('client_id')->constrained('clients')->cascadeOnDelete()->cascadeOnUpdate();

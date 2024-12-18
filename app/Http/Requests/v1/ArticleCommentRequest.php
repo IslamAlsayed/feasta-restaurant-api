@@ -22,9 +22,7 @@ class ArticleCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'like' => 'null|in:true,false',
             'comment' => 'required|string|min:1',
-            'feeling' => 'required|string',
             'client_id' => 'required|exists:clients,id',
             'article_id' => 'required|exists:articles,id',
         ];

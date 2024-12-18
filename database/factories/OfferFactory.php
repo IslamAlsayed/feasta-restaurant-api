@@ -2,8 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Menu;
-use App\Models\Stock;
+use App\Models\Recipe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,14 +20,14 @@ class OfferFactory extends Factory
         $start_date = fake()->dateTimeThisYear();
         $end_date = (clone $start_date)->modify('+' . rand(1, 3) . ' days');
 
-        $menu = Menu::inRandomOrder()->first() ?? Menu::factory()->create();
+        $recipe = Recipe::inRandomOrder()->first() ?? Recipe::factory()->create();
 
         return [
             'discount' => rand(30, 100),
             'description' => fake()->sentence(rand(7, 14)),
             'start_date' => $start_date,
             'end_date' => $end_date,
-            'menu_id' => $menu,
+            'recipe_id' => $recipe->id,
         ];
     }
 }

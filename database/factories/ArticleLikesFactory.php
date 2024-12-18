@@ -9,22 +9,27 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Comment>
  */
-class ArticleCommentsFactory extends Factory
+class ArticleLikesFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
+    private static $numbers = [];
+
     public function definition(): array
     {
-        $client = Client::inRandomOrder()->first() ?? Client::factory()->create();
+        if (empty(self::$numbers)) {
+            self::$numbers = range(1, Client::pluck('id')->count());
+            shuffle(self::$numbers);
+        }
+
+        $uniqueClientId = array_pop(self::$numbers);
         $article = Article::inRandomOrder()->first() ?? Article::factory()->create();
 
         return [
-            'comment' => fake()->sentence(rand(7, 50)),
-            'reacts' => rand(0, 4686),
-            'client_id' => $client->id,
+            'client_id' => $uniqueClientId,
             'article_id' => $article->id,
         ];
     }

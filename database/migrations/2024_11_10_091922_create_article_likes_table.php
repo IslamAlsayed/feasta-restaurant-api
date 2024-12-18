@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subscribes', function (Blueprint $table) {
+        Schema::create('article_likes', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->softDeletes();
+            $table->foreignId('client_id')->constrained('clients')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('article_id')->constrained('articles')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subscribes');
+        Schema::dropIfExists('article_likes');
     }
 };

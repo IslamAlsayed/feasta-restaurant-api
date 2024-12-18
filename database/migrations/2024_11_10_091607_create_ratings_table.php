@@ -16,7 +16,7 @@ return new class extends Migration
             $table->longText('message');
             $table->enum('rate', ['1', '2', '3', '4', '5']);
             $table->foreignId('client_id')->constrained('clients')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('menu_id')->constrained('menus')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('recipe_id')->constrained('recipes')->cascadeOnDelete()->cascadeOnUpdate();
             $table->softDeletes();
             $table->timestamps();
         });

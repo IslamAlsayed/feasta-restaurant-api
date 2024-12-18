@@ -4,23 +4,15 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class ArticleLikes extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
-        'items',
-        'total',
-        'discount',
-        'client',
-        'address',
-        'wayEat',
-        'wayPay',
-        'status',
         'client_id',
+        'article_id',
     ];
 
     protected $hidden = [
@@ -36,5 +28,10 @@ class Order extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
     }
 }

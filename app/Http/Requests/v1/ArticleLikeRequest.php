@@ -4,7 +4,7 @@ namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OfferRequest extends FormRequest
+class ArticleLikeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,18 +22,8 @@ class OfferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'discount' => 'required|numeric|between:1,100',
-            'description' => 'nullable|min:1',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'item_id' => 'required|exists:recipes,id',
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'end_date.after' => 'The end date must be a date after the start date.',
+            'client_id' => 'required|exists:clients,id',
+            'article_id' => 'required|exists:articles,id',
         ];
     }
 }

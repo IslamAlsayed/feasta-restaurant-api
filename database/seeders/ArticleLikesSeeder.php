@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Reservation;
+use App\Models\ArticleLikes;
+use App\Models\Client;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
-class ReservationSeeder extends Seeder
+class ArticleLikesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +15,9 @@ class ReservationSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        Reservation::truncate();
+        ArticleLikes::truncate();
         Schema::enableForeignKeyConstraints();
 
-        Reservation::factory(7)->create();
+        ArticleLikes::factory(Client::pluck('id')->count())->create();
     }
 }

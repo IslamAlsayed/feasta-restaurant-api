@@ -23,8 +23,14 @@ class Client extends Model
     ];
 
     protected $hidden = [
-        "created_at",
+        'email',
+        'password',
+        'phone',
+        'address',
+        'status',
+        'notes',
         "deleted_at",
+        "created_at"
     ];
 
     public function getImageAttribute($value)
@@ -36,7 +42,12 @@ class Client extends Model
 
     public function getUpdatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
+        return Carbon::parse($value)->format('Y-m-d H:i A');
+    }
+
+    public function reservation()
+    {
+        return $this->hasMany(Reservation::class);
     }
 
     public function rating()
@@ -47,6 +58,16 @@ class Client extends Model
     public function articleComments()
     {
         return $this->hasMany(ArticleComments::class);
+    }
+
+    public function articleLikes()
+    {
+        return $this->hasMany(ArticleLikes::class);
+    }
+
+    public function recipeComments()
+    {
+        return $this->hasMany(RecipeComments::class);
     }
 
     public function cart()

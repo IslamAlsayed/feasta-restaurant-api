@@ -5,7 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Http\Requests\v1\ArticleRequest;
-use App\Models\ArticleComments;
+use Illuminate\Support\Facades\Response;
 
 class ArticleController extends Controller
 {
@@ -14,7 +14,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::with('articleComments.client')->withCount('articleComments')->orderByDesc('article_comments_count')->get();
+        $articles = Article::with('articleComments.client')
+            ->withCount('articleComments')
+            ->orderByDesc('article_comments_count')
+            ->with('articleLikes')
+            ->withCount('articleLikes')
+            ->orderByDesc('article_likes_count')
+            ->get();
 
         if ($articles->isEmpty()) {
             return response()->json(['status' => 404, 'result' => 'No articles found'], 404);
@@ -42,7 +48,14 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::find($id);
+        $article = Article::with('articleComments.client')
+            ->where('id', $id)
+            ->withCount('articleComments')
+            ->orderByDesc('article_comments_count')
+            ->with('articleLikes')
+            ->withCount('articleLikes')
+            ->orderByDesc('article_likes_count')
+            ->first();
 
         if (!$article) {
             return response()->json(['status' => 404, 'result' => 'No article found'], 404);

@@ -7,9 +7,9 @@ use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Menu>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Recipe>
  */
-class MenuFactory extends Factory
+class RecipeFactory extends Factory
 {
     /**
      * Define the model's default state.

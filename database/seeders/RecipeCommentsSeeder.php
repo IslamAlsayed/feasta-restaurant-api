@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Reservation;
+use App\Models\RecipeComments;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
-class ReservationSeeder extends Seeder
+class RecipeCommentsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +14,9 @@ class ReservationSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        Reservation::truncate();
+        RecipeComments::truncate();
         Schema::enableForeignKeyConstraints();
 
-        Reservation::factory(7)->create();
+        RecipeComments::factory(50)->create();
     }
 }

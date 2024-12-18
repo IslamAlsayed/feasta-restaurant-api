@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\MenuComments;
+use App\Models\Order;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
-class MenuCommentsSeeder extends Seeder
+class OrderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +14,9 @@ class MenuCommentsSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        MenuComments::truncate();
+        Order::truncate();
         Schema::enableForeignKeyConstraints();
 
-        MenuComments::factory(50)->create();
+        Order::factory(7)->create();
     }
 }

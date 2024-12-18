@@ -25,7 +25,7 @@ class RatingRequest extends FormRequest
             'message' => 'nullable|min:1',
             'rate' => 'required|between:1,5',
             'client_id' => 'required|exists:clients,id',
-            'menu_id' => 'required|exists:menu,id',
+            'recipe_id' => 'required|exists:recipe,id',
         ];
     }
 }

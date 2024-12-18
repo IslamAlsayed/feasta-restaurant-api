@@ -12,9 +12,8 @@ class ArticleComments extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'like',
         'comment',
-        'feeling',
+        'reacts',
         'client_id',
         'article_id',
     ];
@@ -26,7 +25,7 @@ class ArticleComments extends Model
 
     public function getUpdatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
+        return Carbon::parse($value)->format('Y-m-d H:i A');
     }
 
     public function client()

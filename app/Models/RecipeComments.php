@@ -7,16 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class MenuComments extends Model
+class RecipeComments extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name',
         'comment',
         'rate',
-        'menu_id',
-        'client_id'
+        'client_id',
+        'recipe_id'
     ];
 
     protected $hidden = [
@@ -26,12 +25,12 @@ class MenuComments extends Model
 
     public function getUpdatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i');
+        return Carbon::parse($value)->format('Y-m-d H:i A');
     }
 
-    public function menu()
+    public function recipe()
     {
-        return $this->belongsTo(Menu::class);
+        return $this->belongsTo(Recipe::class);
     }
 
     public function client()

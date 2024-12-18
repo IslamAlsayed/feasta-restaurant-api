@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Chef;
-use App\Models\Menu;
+use App\Models\Recipe;
 use DateTime;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
-class MenuSeeder extends Seeder
+class RecipeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,11 +16,11 @@ class MenuSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        Menu::truncate();
+        Recipe::truncate();
         Schema::enableForeignKeyConstraints();
         $date = new DateTime();
 
-        $menu = [
+        $recipes = [
             [
                 'title' => 'CLass Margherita Pizza',
                 'price' => fake()->randomFloat(2, 49.99, 199.99),
@@ -1703,8 +1703,8 @@ class MenuSeeder extends Seeder
             ]
         ];
 
-        foreach ($menu as $menu) {
-            Menu::create($menu);
+        foreach ($recipes as $recipe) {
+            Recipe::create($recipe);
         }
     }
 }

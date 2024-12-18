@@ -32,11 +32,16 @@ class Article extends Model
 
     public function getUpdatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d H:i');
+        return Carbon::parse($value)->format('Y-m-d H:i A');
     }
 
     public function articleComments()
     {
         return $this->hasMany(ArticleComments::class);
+    }
+
+    public function articleLikes()
+    {
+        return $this->hasMany(ArticleLikes::class);
     }
 }

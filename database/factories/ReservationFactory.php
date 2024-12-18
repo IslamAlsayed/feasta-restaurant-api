@@ -17,16 +17,17 @@ class ReservationFactory extends Factory
      */
     public function definition(): array
     {
-        $client = Client::inRandomOrder()->first() ?? Client::factory()->create();
+        // $client = Client::inRandomOrder()->first() ?? Client::factory()->create();
+        $client = Client::find(1) ?? Client::factory()->create();
 
         return [
             'name' => $client->name,
             'email' => $client->email,
             'capacity' => fake()->numberBetween(1, 10),
             'date' => fake()->date(),
-            'time' => fake()->randomElement(['1', '2', '3', '4']),
+            'time' => fake()->randomElement(['1', '2', '3']),
             'phone' => $client->phone,
-            'status' => 'pending',
+            'status' => fake()->randomElement(['pending', 'confirmed', 'cancelled']),
             'client_id' => $client->id,
         ];
     }

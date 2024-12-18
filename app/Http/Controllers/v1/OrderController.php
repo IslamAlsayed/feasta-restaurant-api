@@ -41,15 +41,15 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($client_id)
     {
-        $order = Order::with('client')->find($id);
+        $orders = Order::with('client')->where('client_id', $client_id)->get();
 
-        if (!$order) {
-            return response()->json(['status' => 404, 'result' => 'No order found'], 404);
+        if ($orders->isEmpty()) {
+            return response()->json(['status' => 404, 'result' => 'No orders found'], 404);
         }
 
-        return response()->json(['status' => 200, 'result' => $order], 200);
+        return response()->json(['status' => 200, 'result' => $orders], 200);
     }
 
     /**
