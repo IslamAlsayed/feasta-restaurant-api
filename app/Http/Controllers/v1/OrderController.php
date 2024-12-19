@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
+use App\Events\SendMessage;
 use App\Models\Order;
 use App\Http\Requests\v1\OrderRequest;
 use Illuminate\Http\Request;

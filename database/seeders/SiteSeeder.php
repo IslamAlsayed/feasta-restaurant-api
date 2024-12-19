@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Article;
+use App\Models\Site;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
-class ArticleSeeder extends Seeder
+class SiteSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,9 +14,9 @@ class ArticleSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        Article::truncate();
+        Site::truncate();
         Schema::enableForeignKeyConstraints();
 
-        Article::factory(24)->create();
+        Site::factory()->create();
     }
 }

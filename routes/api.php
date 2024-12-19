@@ -14,6 +14,7 @@ use App\Http\Controllers\v1\OrderController;
 use App\Http\Controllers\v1\RecipeController;
 use App\Http\Controllers\v1\RecipeCommentsController;
 use App\Http\Controllers\v1\ReservationController;
+use App\Http\Controllers\v1\SiteController;
 use App\Http\Controllers\v1\TableController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,13 @@ Route::post('pusher/auth', [AuthController::class, 'pusher'])->name('pusher.auth
 
 
 
+
+//? done
+// Site Routes
+Route::post('site', [SiteController::class, 'store'])->name('site.store');
+Route::get('site/{id}', [SiteController::class, 'show'])->name('site.show');
+Route::put('site/{id}', [SiteController::class, 'update'])->name('site.update');
+Route::delete('site/{id}', [SiteController::class, 'destroy'])->name('site.destroy');
 
 //? done
 // Reservations Routes

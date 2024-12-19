@@ -61,6 +61,11 @@ class Recipe extends Model
         return $this->hasMany(RecipeComments::class);
     }
 
+    public function recipeLikes()
+    {
+        return $this->hasMany(RecipeLikes::class);
+    }
+
     public function offer()
     {
         return $this->hasMany(Offer::class);

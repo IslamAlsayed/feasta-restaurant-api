@@ -2,6 +2,7 @@
 
 use App\Events\SendMessage;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------

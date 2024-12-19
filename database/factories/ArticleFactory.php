@@ -27,7 +27,7 @@ class ArticleFactory extends Factory
         $uniqueNumber = array_pop(self::$numbers);
 
         return [
-            'title' => 'best chocolate cake',
+            'title' => fake()->sentence(rand(3, 14)),
             'description' => fake()->sentence(rand(14, 50)),
             'image' => $uniqueNumber . '.jpg',
         ];
